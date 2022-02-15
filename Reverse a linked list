@@ -1,0 +1,27 @@
+int list_length(SinglyLinkedListNode* llist)
+{
+    int count=0;
+    while(llist!=NULL)
+    {
+        llist=llist->next;
+        count++;
+    }
+    return count;
+}
+SinglyLinkedListNode* reverse(SinglyLinkedListNode* llist) {
+    int arr[1000];SinglyLinkedListNode* temp=llist;
+    int l=list_length(llist);
+    for(int i=1;i<l+1;i++)
+    {
+        arr[i]=temp->data;
+        temp=temp->next;
+    }
+    temp=llist;
+    for(int j=l;j>=1;j--)
+    {
+        temp->data=arr[j];
+        temp=temp->next;
+    }
+    return llist;
+}
+
