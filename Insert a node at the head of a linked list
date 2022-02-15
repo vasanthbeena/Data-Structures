@@ -1,0 +1,9 @@
+SinglyLinkedListNode* insertNodeAtHead(SinglyLinkedListNode* llist, int data) {
+    struct SinglyLinkedListNode *newnode;
+    newnode=create_singly_linked_list_node(data);
+    newnode->data=data;
+    newnode->next=llist;
+    return newnode;
+    
+}
+
