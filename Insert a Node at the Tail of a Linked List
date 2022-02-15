@@ -1,0 +1,28 @@
+int list_length(SinglyLinkedListNode* head)
+{
+    int count=0;
+    while(head!=NULL)
+    {
+        head=head->next;
+        count+=1;
+    }
+    return count;
+}
+SinglyLinkedListNode* insertNodeAtTail(SinglyLinkedListNode* head, int data) {
+    SinglyLinkedListNode* newn,*temp=head;
+    newn=create_singly_linked_list_node(data);
+    int l=list_length(head);
+    if(temp==NULL)
+    {
+        return newn;
+    }
+    else { 
+        for(int i=1;i<l;i++)
+        {
+            temp=temp->next;
+        }
+        temp->next=newn;
+        return head;
+    }
+    
+}
