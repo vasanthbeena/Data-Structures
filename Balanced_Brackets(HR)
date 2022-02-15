@@ -1,0 +1,62 @@
+char stack[1000],ele;int top=-1;
+int isFull()
+{
+    if(top==999)
+     return 1;
+    else
+     return 0;
+}
+int isEmpty()
+{
+    if(top==-1)
+     return 1;
+    else
+     return 0;
+}
+void push(int element)
+{
+    if(isFull())
+    {
+        return;
+    }
+    else
+    {
+        top++;
+        stack[top]=element;
+    }
+}
+void pop()
+{
+    if(isEmpty())
+     return ;
+    else {
+        top--;
+    }
+    
+}
+char* isBalanced(char* s) {
+    for(int i=0;s[i]!='\0';i++)
+    {
+        if (s[i]=='{' || s[i]=='[' || s[i]=='(') 
+        {
+            push(s[i]);
+        }
+        else
+        {
+            if(top==-1)
+             return "NO"; 
+            else if(stack[top]=='{' && s[i]=='}')
+             pop();
+            else if(stack[top]=='[' && s[i]==']')
+             pop();
+            else if(stack[top]=='(' && s[i]==')')
+             pop();
+            else
+             return "NO";
+        }
+    }
+    if(top==-1)
+     return "YES";
+    else
+     return "NO";
+}
