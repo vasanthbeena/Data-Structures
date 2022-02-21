@@ -1,0 +1,49 @@
+#include<stdio.h>
+int stack[100],top=-1;
+void push(int ele)
+{
+    stack[++top]=ele;
+}
+int pop()
+{
+    return stack[top--];
+}
+void postfix_eval(char *s)
+{
+    for(int i=0;s[i]!='\0';i++)
+    {
+        if(s[i]>='0' && s[i]<='9')
+        {
+            int num=s[i]-48;
+            push(num);
+        }
+        else
+        {
+            int x,y;
+            switch(s[i])
+            {
+                case '+':x=pop();y=pop();
+                         push(x+y);
+                         break;
+                case '-':x=pop();y=pop();
+                         push(y-x);
+                         break;
+                case '*':x=pop();y=pop();
+                         push(x*y);
+                         break;
+                case '/':x=pop();y=pop();
+                         push(y/x);
+                         break;
+                default :break;
+                
+            }
+        }
+    }
+}
+int main()
+{
+    char string[]="245+*";
+    postfix_eval(string);
+    printf("%d",stack[top]);
+    return 0;
+}
