@@ -1,0 +1,136 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct cllnode
+{
+    int data;
+    struct cllnode *next;
+};
+struct cllnode* create_node()
+{
+    struct cllnode *temp;
+    temp=(struct cllnode*)malloc(sizeof(struct cllnode));
+    printf("Enter data:");
+    scanf("%d",&temp->data);
+    temp->next=NULL;
+    return temp;
+}
+struct cllnode* create_list(int n)
+{
+    struct cllnode *head,*last,*newn;
+    for(int i=0;i<n;i++)
+    {
+        newn=create_node();
+        if(i==0)
+         head=newn;
+        else
+        {
+            last->next=newn;
+            last=newn;
+        }
+        last=newn;
+    }
+    last->next=head;
+    return head;
+}
+void print_list(struct cllnode* head)
+{
+    struct cllnode* temp=head;
+    if(temp==NULL)
+     return;
+    while(temp->next!=head)
+    {
+        printf("%d\t",temp->data);
+        temp=temp->next;
+    }
+    printf("%d",temp->data);
+}
+struct cllnode* insert_at_beg(struct cllnode* start)
+{
+    struct cllnode* temp=start,*newn;int data;
+    newn=create_node(data);
+    if(temp==NULL)
+     return newn;
+    while(temp->next!=start)
+    {
+        temp=temp->next;
+    }
+    temp->next=newn;
+    newn->next=start;
+    return newn;
+}
+struct cllnode* insert_at_end(struct cllnode* start)
+{
+    struct cllnode* newn=insert_at_beg(start);
+    return newn->next;
+}
+struct cllnode* insert_at_position(struct cllnode *start,int pos)
+{
+    struct cllnode* temp=start,*newn;int data;
+    newn=create_node(data);
+    for(int i=0;i<pos-2;i++)
+    {
+        temp=temp->next;
+    }
+    newn->next=temp->next;
+    temp->next=newn;
+    return start;
+}
+void delete(struct cllnode* start,int key)
+{
+    struct cllnode* prev,*curr=start,*d;
+    if(curr==NULL)
+      return;
+    if(curr->data==key && curr->next==curr)
+    {
+        free(curr);
+        return;
+    }
+    prev=curr;
+    if(curr->data==key)
+    {
+        while(prev->next!=curr)
+            prev=prev->next;
+        prev->next=curr->next;
+        free(curr);
+        curr=prev->next;
+      return;
+    }
+    while(prev->next!=curr&&prev->next->data!=key)
+    {
+        prev=prev->next;
+    }
+    if(prev->next->data==key)
+    {
+        d=prev->next;
+        prev->next=d->next;
+        free(d);
+    }
+    else{
+        printf("no such keyfound");
+    }
+}
+int main()
+{
+    int n,pos,ele;
+    printf("Enter no.of elements:");
+    scanf("%d",&n);
+    struct cllnode *start;
+    start=create_list(n);
+    print_list(start);
+    printf("\nEnter the element to insert at beginning\n");
+    start=insert_at_beg(start);
+    print_list(start);
+    printf("\nEnter the element to insert at end\n");
+    start=insert_at_end(start);
+    print_list(start);
+    printf("\nEnter tne position to insert:");
+    scanf("%d",&pos);
+    printf("\nEnter the element to insert at specified position:\n");
+    start=insert_at_position(start,pos);
+    print_list(start);
+    printf("\nEnter element to be deleted:");
+    scanf("%d",&ele);
+    delete(start,ele);
+    print_list(start);
+    return 0;
+}
