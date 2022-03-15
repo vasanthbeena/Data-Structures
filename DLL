@@ -1,0 +1,128 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct dllnode
+{
+    int data;
+    struct dllnode* next;
+    struct dllnode* prev;
+};
+struct dllnode* create_node()
+{
+    struct dllnode* temp;int data;
+    temp=(struct dllnode*)malloc(sizeof(struct dllnode));
+    printf("Enter data:");
+    scanf("%d",&data);
+    temp->data=data;
+    temp->next=NULL;
+    temp->prev=NULL;
+    return temp;
+}
+struct dllnode* create_list(int n)
+{
+    struct dllnode* head,*tail,*newn;
+    for(int i=0;i<n;i++)
+    {
+        newn=create_node();
+        if(i==0)
+            head=newn;
+        else
+        {
+            tail->next=newn;
+            newn->prev=tail;
+        }
+        tail=newn;
+    }
+    return head;
+}
+int list_length(struct dllnode* start)
+{
+    int c=0;
+    while(start)
+    {
+        c=c+1;
+        start=start->next;
+    }
+    return c;
+}
+struct dllnode* Insert_at_beg(struct dllnode* start)
+{
+    struct dllnode* newn=create_node();
+    newn->next=start;
+    start->prev=newn;
+    return newn;
+}
+struct dllnode* Insert_at_position(struct dllnode* start)
+{
+    struct dllnode* newn=create_node(),*temp=start;int position;
+    printf("Enter position to insert:");
+    scanf("%d",&position);
+    for(int i=1;i<position-1;i++)
+    {
+        temp=temp->next;
+    }
+    newn->next=temp->next;
+    temp->next->prev=newn;
+    newn->prev=temp;
+    temp->next=newn;
+    return start;
+}
+struct dllnode* Insert_at_end(struct dllnode* start)
+{
+    struct dllnode* temp=start,*newn=create_node();
+    for(int i=1;i<list_length(start);i++)
+    {
+        temp=temp->next;
+    }
+    temp->next=newn;
+    newn->prev=temp;
+    return start;
+}
+struct dllnode* delete_at_beg(struct dllnode* start){
+    return start->next;
+}
+struct dllnode* delete_at_pos(struct dllnode* start)
+{
+    struct dllnode* temp=start;int pos;
+    printf("Enter the position to delete:");
+    scanf("%d",&pos);
+    for(int i=1;i<pos-1;i++)
+    {
+        temp=temp->next;
+    }
+    temp->next=temp->next->next;
+    temp->next->next->prev=temp;
+    return start;
+}
+void print_list(struct dllnode* start)
+{
+    while(start)
+    {
+        printf("%d\t",start->data);
+        start=start->next;
+    }
+}
+int main()
+{
+    int n;
+    printf("Enter no.of elements:");
+    scanf("%d",&n);
+    struct dllnode* start;
+    start=create_list(n);
+    printf("Elements in the list is:\n");
+    print_list(start);
+    int choice;
+    printf("\nChoose\n1.Insert at beg\n2.Insert at end\n3.Insert at specific position\n4.delete_at_pos\n5.delete_at_beg");
+    printf("Enter choice:");
+    scanf("%d",&choice);
+    if(choice==1)
+        print_list(Insert_at_beg(start));
+    else if(choice==2)
+        print_list(Insert_at_end(start));
+    else if(choice==3)
+        print_list(Insert_at_position(start));
+    else if(choice==4)
+        print_list(delete_at_pos(start));
+    else
+        print_list(delete_at_beg(start));
+    return 0;
+}
